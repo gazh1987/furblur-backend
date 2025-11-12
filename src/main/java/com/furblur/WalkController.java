@@ -3,6 +3,8 @@ package com.furblur;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,11 +17,13 @@ public class WalkController {
 	private WalkRepository walkRepository;
 	
 	@PostMapping("/walks")
-	public Walk createWalk(@RequestBody Walk walk) {
+	public ResponseEntity<Walk> createWalk(@RequestBody Walk walk) {
 		if(walk.getCoordinates() != null) {
 			walk.getCoordinates().forEach(c -> c.setWalk(walk));
 		}
-		return walkRepository.save(walk);
+		
+		Walk saved = walkRepository.save(walk);
+		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 	
 	@GetMapping("/walks")
