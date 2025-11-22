@@ -22,10 +22,58 @@ public class Walk {
 	private LocalDate date;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
+	private Double distanceKm;
+	private Double averagePace;
+	private String durationFormatted;
+	private String energyLevel;
+	private String happiness;
+	private String behaviour;
 	
 	@OneToMany(mappedBy = "walk", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonManagedReference
 	private List<Coordinate> coordinates;
+	
+	public Double getDistanceKm() {
+		return distanceKm;
+	}
+	public void setDistanceKm(Double distanceKm) {
+		this.distanceKm = distanceKm;
+	}
+	
+	public Double getAveragePace() {
+		return averagePace;
+	}
+	public void setAveragePace(Double averagePace) {
+		this.averagePace = averagePace;
+	}
+	
+	public String getDurationFormatted() {
+		return durationFormatted;
+	}
+	public void setDurationFormatted(String durationFormatted) {
+		this.durationFormatted = durationFormatted;
+	}
+	
+	public String getEnergyLevel() {
+		return energyLevel;
+	}
+	public void setEnergyLevel(String energyLevel) {
+		this.energyLevel = energyLevel;
+	}
+	
+	public String getHappiness() {
+		return happiness;
+	}
+	public void setHappiness(String happiness) {
+		this.happiness = happiness;
+	}
+	
+	public String getBehaviour() {
+		return behaviour;
+	}
+	public void setBehaviour(String behaviour) {
+		this.behaviour = behaviour;
+	}
 	
 	public LocalDate getDate() {
 		return date;
@@ -48,10 +96,16 @@ public class Walk {
 		this.endTime = endTime;
 	}
 	
-	public Long getId() { return id; }
-	public void setId(Long id) { this.id = id; }
+	public Long getId() { 
+		return id; 
+	}
+	public void setId(Long id) { 
+		this.id = id; 
+	}
 	
-	public List<Coordinate> getCoordinates() { return coordinates; }
+	public List<Coordinate> getCoordinates() { 
+		return coordinates; 
+	}
 	public void setCoordinates(List<Coordinate> coordinates) {
 		this.coordinates = coordinates;
 		if (coordinates != null) {
