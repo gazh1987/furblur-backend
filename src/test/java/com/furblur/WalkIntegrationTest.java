@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -26,7 +27,7 @@ class WalkIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Test
-    void fullFlow_createAndFetchWalk() throws Exception {
+    void fullFlow_postGetAndDeleteWalk() throws Exception {
     	
         Walk newWalk = new Walk();
         newWalk.setDate(LocalDate.now());
@@ -63,5 +64,13 @@ class WalkIntegrationTest {
     			.andExpect(jsonPath("$[0].energyLevel").value("Medium"))
     			.andExpect(jsonPath("$[0].happiness").value("Very Happy"))
     			.andExpect(jsonPath("$[0].behaviour").value("Good"));
+        
+        mockMvc.perform(delete("/delete/1"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().string("Walk 1 deleted"));
+        
+        mockMvc.perform(get("/walks"))
+        	.andExpect(status().isOk())
+        	.andExpect(content().json("[]"));
     }
 }
